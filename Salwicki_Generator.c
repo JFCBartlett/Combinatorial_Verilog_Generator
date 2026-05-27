@@ -1,10 +1,12 @@
 #include <stdio.h>
 
 //#include "add-ndrtosn.h"
-//#define RES_PL 1
+#define RES_PL 1
 
-#include "d1-ndrtosn.h"
-#define RES_PL 22
+#include "sn.h"
+
+//#include "d1-ndrtosn.h"
+//#define RES_PL 22
 
 //#include "d5-ndrtosn.h"
 //#define RES_PL 110
@@ -31,9 +33,6 @@ int main()
     printf("reg %s p [0:%d];\n", pres1, m-1);
     printf("reg %s p_next [0:%d];\n", pres1, m-1);
     printf("reg %s f [0:%d];\n", pres1, n-1);
-
-    printf("reg %s tf;\n", pres1);
-    printf("reg %s tc;\n", pres1);
 
     printf("integer i;\n\n");
 
@@ -90,35 +89,24 @@ int main()
         }
     }
 
-    //tf
-    printf("\n\ttf = ");
-
-    for(j=0;j<n;j++)
-    {
-        printf("(f[%d] > 0) ? %d : ", j, j+1);
-    }
-
-    printf("0;\n\n");
-
-    //print case
-    printf("\tcase(tf)\n\n");
-
-    for(j=0;j<n;j++)
-    {
-        printf("\t\t%d: begin\n", j+1);
-
-        printf("\t\t\ttc = f[%d];\n", j);
+    for(j=0;j<n;j++) {
+        if(b[j][j] > 1) {
+            printf("\t\tif (%d*f[%d] <= p[%d]) begin\n",b[j][j],j,j);
+        }
+        else {
+            printf("\t\tif (f[%d] <= p[%d]) begin\n",j,j);
+        }
         for(i=0;i<m;i++)
         {
             if(b[i][j] > 0)
             {
                 if(b[i][j] != 1)
                 {
-                    printf("\t\t\tp_next[%d] = p[%d] - tc*%d;\n",i,i,b[i][j]);
+                    printf("\t\t\tp_next[%d] = p[%d] - %d*f[%d];\n",i,i,b[i][j],j);
                 }
                 else
                 {
-                    printf("\t\t\tp_next[%d] = p[%d] - tc;\n",i,i);
+                    printf("\t\t\tp_next[%d] = p[%d] - f[%d];\n",i,i,j);
                 }
             }
         }
@@ -130,11 +118,11 @@ int main()
             {
                 if(d[i][j] != 1)
                 {
-                    printf("\t\t\tp_next[%d] = p[%d] + tc*%d;\n",i,i,d[i][j]);
+                    printf("\t\t\tp_next[%d] = p[%d] + %d*f[%d];\n",i,i,d[i][j],j);
                 }
                 else
                 {
-                    printf("\t\t\tp_next[%d] = p[%d] + tc;\n",i,i);
+                    printf("\t\t\tp_next[%d] = p[%d] + f[%d];\n",i,i,j);
                 }
             }
         }
@@ -142,9 +130,6 @@ int main()
         printf("\t\tend\n\n");
     }
 
-    printf("\t\tdefault: tc = 0;\n");
-
-    printf("\tendcase\n");
     printf("end\n\n");
 
     // Sequential block
