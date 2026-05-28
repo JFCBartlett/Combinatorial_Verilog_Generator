@@ -91,10 +91,10 @@ int main()
 
     for(j=0;j<n;j++) {
         if(b[j][j] > 1) {
-            printf("\t\tif (%d*f[%d] <= p[%d]) begin\n",b[j][j],j,j);
+            printf("\tif (%d*f[%d] <= p[%d]) begin\n",b[j][j],j,j);
         }
         else {
-            printf("\t\tif (f[%d] <= p[%d]) begin\n",j,j);
+            printf("\tif (f[%d] <= p[%d]) begin\n",j,j);
         }
         for(i=0;i<m;i++)
         {
@@ -102,11 +102,11 @@ int main()
             {
                 if(b[i][j] != 1)
                 {
-                    printf("\t\t\tp_next[%d] = p[%d] - %d*f[%d];\n",i,i,b[i][j],j);
+                    printf("\t\tp_next[%d] = p[%d] - %d*f[%d];\n",i,i,b[i][j],j);
                 }
                 else
                 {
-                    printf("\t\t\tp_next[%d] = p[%d] - f[%d];\n",i,i,j);
+                    printf("\t\tp_next[%d] = p[%d] - f[%d];\n",i,i,j);
                 }
             }
         }
@@ -118,16 +118,16 @@ int main()
             {
                 if(d[i][j] != 1)
                 {
-                    printf("\t\t\tp_next[%d] = p[%d] + %d*f[%d];\n",i,i,d[i][j],j);
+                    printf("\t\tp_next[%d] = p[%d] + %d*f[%d];\n",i,i,d[i][j],j);
                 }
                 else
                 {
-                    printf("\t\t\tp_next[%d] = p[%d] + f[%d];\n",i,i,j);
+                    printf("\t\tp_next[%d] = p[%d] + f[%d];\n",i,i,j);
                 }
             }
         }
 
-        printf("\t\tend\n\n");
+        printf("\tend\n\n");
     }
 
     printf("end\n\n");
